@@ -6267,6 +6267,8 @@ static grub_err_t ventoy_cmd_show_secondary_menu(grub_extcmd_context_t ctxt, int
 
     fsize = grub_strtoull(args[2], NULL, 10);
 
+    vtoy_len_ssprintf(cmd, pos, len, "set default=1\n");
+    vtoy_dummy_menuentry(cmd, pos, len, "$vt_chosen_name", "second_filename"); seldata[n++] = 1;
     vtoy_dummy_menuentry(cmd, pos, len, "$VTLANG_NORMAL_MODE", "second_normal"); seldata[n++] = 1;
 
     if (grub_strcmp(args[1], "Unix") != 0)
