@@ -6267,7 +6267,6 @@ static grub_err_t ventoy_cmd_show_secondary_menu(grub_extcmd_context_t ctxt, int
 
     fsize = grub_strtoull(args[2], NULL, 10);
 
-    vtoy_dummy_menuentry(cmd, pos, len, "$vt_chosen_name", "second_filename"); seldata[n++] = 1;
     vtoy_dummy_menuentry(cmd, pos, len, "$VTLANG_NORMAL_MODE", "second_normal"); seldata[n++] = 1;
 
     if (grub_strcmp(args[1], "Unix") != 0)
@@ -6287,14 +6286,14 @@ static grub_err_t ventoy_cmd_show_secondary_menu(grub_extcmd_context_t ctxt, int
         }
     }
 
-    vtoy_dummy_menuentry(cmd, pos, len, "$VTLANG_FILE_CHKSUM", "second_checksum"); seldata[n++] = 5;
+    vtoy_dummy_menuentry(cmd, pos, len, "$VTLANG_FILE_CHKSUM [$vt_chosen_name]", "second_checksum"); seldata[n++] = 5;
     vtoy_dummy_menuentry(cmd, pos, len, "$VTLANG_RETURN_PRV_NOESC", "second_return"); seldata[n++] = 6;
 
     do {
         grub_errno = GRUB_ERR_NONE;
         g_ventoy_menu_esc = 1;
         g_ventoy_suppress_esc = 1;
-        g_ventoy_suppress_esc_default = 1;
+        g_ventoy_suppress_esc_default = 0;
         g_ventoy_secondary_menu_on = 1;
         grub_snprintf(cfgfile, sizeof(cfgfile), "configfile mem:0x%llx:size:%d", (ulonglong)(ulong)cmd, pos);
         grub_script_execute_sourcecode(cfgfile);
